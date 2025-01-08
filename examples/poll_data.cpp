@@ -33,9 +33,9 @@ int main() {
         voltage.read_bus_voltage(&bus_voltage);
         voltage.read_power(&power);
 
-        printf("Current: %.3f\n", current);
-        printf("Bus Voltage: %.3f\n", bus_voltage);
-        printf("Power: %.3f\n", power);
+        printf("Current: %.f mA\n", current);
+        printf("Bus Voltage: %.f mV\n", bus_voltage);
+        printf("Power: %.f mW\n", power);
 
         printf("\n----------------------------------------\n\n");
 
