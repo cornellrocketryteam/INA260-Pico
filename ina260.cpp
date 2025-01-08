@@ -16,6 +16,21 @@ bool INA260::begin() {
     return true;
 }
 
+bool INA260::read_current(float *current) {
+    uint8_t reg = INA260_REG_CURRENT;
+    uint8_t data[2];
+
+    if (i2c_write_timeout_us(i2c, INA260_ADDR, &reg, 1, true, BYTE_TIMEOUT_US) < 1) {
+        return false;
+    }
+    if (i2c_read_timeout_us(i2c, INA260_ADDR, data, 2, false, 2 * BYTE_TIMEOUT_US) < 1) {
+        return false;
+    }
+
+    *current = (float)((data[0] << 8) | data[1]) * 1.25;
+    return true;
+}
+
 bool INA260::read_bus_voltage(float *bus_voltage) {
     uint8_t reg = INA260_REG_BUS_VOLTAGE;
     uint8_t data[2];
@@ -28,6 +43,21 @@ bool INA260::read_bus_voltage(float *bus_voltage) {
     }
 
     *bus_voltage = (float)((data[0] << 8) | data[1]) * 1.25;
+    return true;
+}
+
+bool INA260::read_power(float *power) {
+    uint8_t reg = INA260_REG_POWER;
+    uint8_t data[2];
+
+    if (i2c_write_timeout_us(i2c, INA260_ADDR, &reg, 1, true, BYTE_TIMEOUT_US) < 1) {
+        return false;
+    }
+    if (i2c_read_timeout_us(i2c, INA260_ADDR, data, 2, false, 2 * BYTE_TIMEOUT_US) < 1) {
+        return false;
+    }
+
+    *power = (float)((data[0] << 8) | data[1]) * 10;
     return true;
 }
 

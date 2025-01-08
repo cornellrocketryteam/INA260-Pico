@@ -22,17 +22,22 @@ int main() {
     }
     printf("Connected\n");
 
-    float bus_voltage;
+    float current, bus_voltage, power;
 
     while (!voltage.begin()) {
         printf("Error: IMU failed to initialize\n");
     }
 
     while (true) {
+        voltage.read_current(&current);
         voltage.read_bus_voltage(&bus_voltage);
-        printf("Bus Voltage: %.3f\n", bus_voltage);
+        voltage.read_power(&power);
 
-        printf("----------------------------------------\n\n");
+        printf("Current: %.3f\n", current);
+        printf("Bus Voltage: %.3f\n", bus_voltage);
+        printf("Power: %.3f\n", power);
+
+        printf("\n----------------------------------------\n\n");
 
         sleep_ms(20);
     }
